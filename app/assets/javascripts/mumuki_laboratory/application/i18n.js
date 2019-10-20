@@ -14,4 +14,4 @@
   mumuki.translate = function (key) {
     return mumuki.LOCALES[mumuki.locale][key];
   }
-});
+})();
