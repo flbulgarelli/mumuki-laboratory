@@ -6,7 +6,9 @@ ruby '~> 2.3'
 gem 'puma'
 
 gem 'mumuki-domain', github: 'mumuki/mumuki-domain', branch: 'feature-cumparsita'
+
 gem 'mulangjs', path: '../mulang/ghcjslib/gem'
+gem 'muvment', path: '../muvment'
 
 gem 'execjs'
 gem 'therubyracer', platforms: :ruby
