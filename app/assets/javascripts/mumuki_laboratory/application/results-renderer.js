@@ -6,7 +6,7 @@
   // ==========================
 
   function _messageForStatus(status) {
-    if (!["errored", "failed", "passed_with_warnings", "passed"].contains(status)) {
+    if (!["errored", "failed", "passed_with_warnings", "passed"].includes(status)) {
       throw `Unsupported status ${status}`;
     }
     return mumuki.translate(status);
