@@ -6,12 +6,10 @@
   // ==========================
 
   function _messageForStatus(status) {
-    switch (status) { // FIXME i18n
-      case "errored":              return "¡Ups! Tu solución no se puede ejecutar";
-      case "failed":               return "Tu solución no pasó las pruebas";
-      case "passed_with_warnings": return "Tu solución funcionó, pero hay cosas que mejorar";
-      case "passed":               return "¡Muy bien! Tu solución pasó todas las pruebas";
+    if (!["errored", "failed", "passed_with_warnings", "passed"].contains(status)) {
+      throw `Unsupported status ${status}`;
     }
+    return mumuki.translate(status);
   }
 
   function _iconForStatus(status) {
@@ -24,12 +22,11 @@
   }
 
   function _closeModalButtonHtml() {
-    const keepLearning = "¡Seguí aprendiendo!"; // FIXME i18n
-    return `<button class="btn btn-success btn-block mu-close-modal">${keepLearning}</button>`;
+    return `<button class="btn btn-success btn-block mu-close-modal">${mumuki.translate('keep_learning')}</button>`;
   }
 
   function _retryButtonHtml() {
-    const retryMessage = "Reintentar"; // FIXME i18n
+    const retryMessage = mumuki.translate('retry_exercise');
     return `<button class="btn btn-success btn-block submission-control" id="kids-btn-retry" data-dismiss="modal" aria-label="${retryMessage}"> ${retryMessage}</button>`;
   }
 
@@ -62,7 +59,7 @@
       </div>`;
   };
 
-  mumuki.renderCorollaryHtml = function(status, exercise) {
+  mumuki.renderCorollaryHtml = function (status, exercise) {
     const statusClass = mumuki.classForStatus(status);
     if (exercise.layout == 'input_kids') {
       return `
@@ -84,5 +81,22 @@
         </div>
         ${mumuki.renderButtonHtml(status)}`;
     }
+  };
+
+  mumuki._renderExpectationHtml = function (result) {
+    return `<li>${_iconForStatus(result.result ? 'passed' : 'failed')} ${mulang.translate(result.expectation.binding, result.expectation.inspection)}</li>`;
   }
+
+  mumuki.renderExpectationsHtml = function (exercise, results) {
+    return `
+      <div class="results-item">
+        ${exercise.layout == 'input_kids' ? '' : `<strong>${mumuki.translate('unmeet_expectations')}</strong>`}
+        <ul class="results-list">
+          ${results.map(_renderExpectationHtml).join('\n')}
+        </ul>
+      </div>`;
+  };
+
+
+
 })();

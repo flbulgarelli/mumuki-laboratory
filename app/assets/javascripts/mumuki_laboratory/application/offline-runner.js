@@ -17,15 +17,25 @@
       return analysisResult.expectationResults.some((it) => !it.result);
     }
 
+    _renderExpectationResults(exercise, analysisResult) {
+      mulang.locale = mumuki.locale;
+      result.expectations_html = mumuki.renderExpectationsHtml(exercise, analysisResult.expectationResults);
+    }
+
+    _updateStatus(analysisResult, result) {
+      if (this._expectationsFailed(analysisResult) && result.status == 'passed') {
+        result.status = 'passed_with_warnings';
+      }
+    }
+
     runExpectations(solution, exercise, result) {
       try {
         const analysisResult = this
                                 ._getMulangCode(solution, exercise, result)
                                 .analyse({ expectations: exercise.expectations });
-        if (this._expectationsFailed(analysisResult) && result.status == 'passed') {
-          result.status = 'passed_with_warnings';
-        }
-        result.expectations_html = '';
+
+        this._updateStatus(analysisResult, result);
+        this._renderExpectationResults(exercise, analysisResult);
       } catch (e) {
         console.warn(`[Mumuki::Laboratory::OfflineRunner] Mulang crashed with ${JSON.stringify(e)}`);
       }
