@@ -54,5 +54,5 @@
     mumuki.Connection = OfflineMode;
   };
 
-  mumuki.goOnline();
+  mumuki.goOffline();
 })();
