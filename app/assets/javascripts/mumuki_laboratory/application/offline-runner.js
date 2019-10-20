@@ -1,5 +1,5 @@
 (() => {
-  const BasicLocalTestRunner = new class {
+  const BasicOfflineTestRunner = new class {
     // This basic runner does not perform any test evaluation, but sets a default
     // passed state, with no test results. This could be improved in the future.
     runTests(solution, exercise, result) {
@@ -8,7 +8,7 @@
     }
   }
 
-  const MulangLocalExpectationsRunner = new class {
+  const MulangOfflineExpectationsRunner = new class {
     _getMulangCode(solution, exercise, result) {
       return result.mulangAst ? mulang.astCode(result.mulangAst) : mulang.nativeCode(exercise.language, solution);
     }
@@ -42,7 +42,7 @@
     }
   }
 
-  function initialLocalResult() {
+  function initialOfflineResult() {
     return {
       // FIXME use a roadmap
       guide_finished_by_solution: false,
@@ -51,33 +51,33 @@
     };
   }
 
-  mumuki.runSolutionLocally = function (exerciseId, solution) {
+  mumuki.runSolutionOffline = function (exerciseId, solution) {
     console.log('[Mumuki::Laboratory::OfflineRunner] Running solution...');
 
     const exercise = mumuki.ExercisesStore.find(exerciseId);
 
-    let result = initialLocalResult();
+    let result = initialOfflineResult();
 
-    mumuki.localTestRunner.runTests(solution, exercise, result);
-    mumuki.localExpectationsRunner.runExpectations(solution, exercise, result);
+    mumuki.offlineTestRunner.runTests(solution, exercise, result);
+    mumuki.offlineExpectationsRunner.runExpectations(solution, exercise, result);
 
     console.log(`[Mumuki::Laboratory::OfflineRunner] Done. Status is ${result.status}...`)
     return Promise.resolve(result);
   };
 
-  // Runners may call this function to set local test runners
-  mumuki.registerLocalTestRunner = function (runner) {
-    mumuki.localTestRunner = runner;
+  // Runners may call this function to set offline test runners
+  mumuki.registerOfflineTestRunner = function (runner) {
+    mumuki.offlineTestRunner = runner;
   };
 
-  // Runners may call this function to set local expectation runners
-  mumuki.registerLocalExpectationsRunner = function (runner) {
-    mumuki.localExpectationsRunner = runner;
+  // Runners may call this function to set offline expectation runners
+  mumuki.registerOfflineExpectationsRunner = function (runner) {
+    mumuki.offlineExpectationsRunner = runner;
   };
 
   mumuki.load(() => {
-    mumuki.registerLocalTestRunner(BasicLocalTestRunner)
-    mumuki.registerLocalExpectationsRunner(MulangLocalExpectationsRunner)
+    mumuki.registerOfflineTestRunner(BasicOfflineTestRunner)
+    mumuki.registerOfflineExpectationsRunner(MulangOfflineExpectationsRunner)
   });
 })();
 

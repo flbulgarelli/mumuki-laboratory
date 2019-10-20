@@ -3,7 +3,7 @@
   const OfflineMode = new class {
     // Runs solution by evaluating it locally
     runNewSolution(exerciseId, solution, _bridge) {
-      return mumuki.runSolutionLocally(exerciseId, solution);
+      return mumuki.runSolutionOffline(exerciseId, solution);
     }
 
     // Renders progress from SubmissionsStore
