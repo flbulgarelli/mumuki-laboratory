@@ -31,7 +31,10 @@
   }
 
   function _nextExerciseButton() {
-    return `<a class="btn btn-success btn-block" role="button" href="../exercises/${mumuki.currentExerciseId + 1}">Siguiente Ejercicio <i class="fa fa-chevron-right"></i></a>`; // TODO missing exercise title
+    return `
+      <a class="btn btn-success btn-block" role="button" href="../exercises/${mumuki.currentExerciseId + 1}">
+        ${mumuki.translate('next_exercise')} <i class="fa fa-chevron-right"></i>
+      </a>`; // TODO missing exercise title
   }
 
   mumuki.classForStatus = function (status) {
@@ -83,8 +86,13 @@
     }
   };
 
-  mumuki._renderExpectationHtml = function (result) {
-    return `<li>${_iconForStatus(result.result ? 'passed' : 'failed')} ${mulang.translate(result.expectation.binding, result.expectation.inspection)}</li>`;
+  function _renderExpectationHtml (result) {
+    const status = result.result ? 'passed' : 'failed';
+    return `
+      <li>
+        <i class="text-${mumuki.classForStatus(status)} fa ${_iconForStatus(status)}"></i>
+        ${mulang.I18n.translate(result.expectation.binding, result.expectation.inspection)}
+      </li>`;
   }
 
   mumuki.renderExpectationsHtml = function (exercise, results) {

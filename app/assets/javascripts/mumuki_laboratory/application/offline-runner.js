@@ -17,8 +17,8 @@
       return analysisResult.expectationResults.some((it) => !it.result);
     }
 
-    _renderExpectationResults(exercise, analysisResult) {
-      mulang.locale = mumuki.locale;
+    _renderExpectationResults(exercise, analysisResult, result) {
+      mulang.I18n.locale = mumuki.locale;
       result.expectations_html = mumuki.renderExpectationsHtml(exercise, analysisResult.expectationResults);
     }
 
@@ -35,7 +35,7 @@
                                 .analyse({ expectations: exercise.expectations });
 
         this._updateStatus(analysisResult, result);
-        this._renderExpectationResults(exercise, analysisResult);
+        this._renderExpectationResults(exercise, analysisResult, result);
       } catch (e) {
         console.warn(`[Mumuki::Laboratory::OfflineRunner] Mulang crashed with ${JSON.stringify(e)}`);
       }
