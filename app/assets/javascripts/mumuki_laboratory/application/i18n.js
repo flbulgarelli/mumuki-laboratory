@@ -8,6 +8,20 @@
       passed: '¡Muy bien! Tu solución pasó todas las pruebas',
       keep_learning: '¡Seguí aprendiendo!',
       retry_exercise: 'Reintentar',
+
+      // offline-specific
+      next_exercise: 'Siguiente Ejercicio'
+    },
+
+    en: {
+      unmeet_expectations: "Goals that weren't met",
+      keep_learning: "Keep learning!",
+      retry_exercise: "Retry"
+    },
+
+    pt: {
+      unmeet_expectations: "Objetivos que não foram atendidos",
+      retry_exercise: "Tentar novamente"
     }
   }
 
