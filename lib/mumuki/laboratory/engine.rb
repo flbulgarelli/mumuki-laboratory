@@ -10,6 +10,7 @@ module Mumuki
     class Engine < ::Rails::Engine
       require 'mumuki/styles'
       require 'muvment'
+      require 'mulangjs'
 
       config.generators.stylesheets = false
       config.generators.javascripts = false
