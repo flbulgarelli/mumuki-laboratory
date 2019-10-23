@@ -32,7 +32,7 @@
 
   function _nextExerciseButton() {
     return `
-      <a class="btn btn-success btn-block" role="button" href="../exercises/${mumuki.currentExerciseId + 1}">
+      <a class="btn btn-success btn-block" role="button" href="../exercises/${mumuki.currentExerciseId + 1}.html">
         ${mumuki.translate('next_exercise')} <i class="fa fa-chevron-right"></i>
       </a>`; // TODO missing exercise title
   }

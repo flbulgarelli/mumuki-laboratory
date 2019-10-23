@@ -10,7 +10,7 @@
 
   const MulangOfflineExpectationsRunner = new class {
     _getMulangCode(solution, exercise, result) {
-      return result.mulangAst ? mulang.astCode(result.mulangAst) : mulang.nativeCode(exercise.language, solution);
+      return result.mulangAst ? mulang.astCode(result.mulangAst) : mulang.nativeCode((exercise.language || 'Gobstones'), solution); // FIXME
     }
 
     _expectationsFailed(analysisResult) {
