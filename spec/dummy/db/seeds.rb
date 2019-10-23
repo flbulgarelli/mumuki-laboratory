@@ -31,4 +31,10 @@ end
 
 Organization.find_or_create_by!(name: 'central')
 
-User.find_or_create_by!(uid: 'dev.student@mumuki.org') { |org| org.permissions = {student: 'central/*'} }
+User.find_or_create_by!(uid: 'dev.student@mumuki.org') do |user|
+  user.permissions = {student: 'central/*'}
+  user.first_name = 'user'
+  user.last_name = 'murga'
+  user.gender = :other
+  user.birthdate = 31.years.ago
+end
