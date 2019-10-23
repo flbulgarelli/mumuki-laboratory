@@ -40,3 +40,20 @@ User.find_or_create_by!(uid: 'dev.student@mumuki.org') do |user|
   user.gender = :other
   user.birthdate = 31.years.ago
 end
+
+puts 'Generating offline tests...'
+Exercise.where(language: Language.for_name('gobstones')).each do |exercise|
+  next unless exercise.test
+
+  test = YAML.load(exercise.test)
+  next unless test['examples']
+
+  examples = test['examples'].map do |example|
+    {
+      initialBoard: example['initial_board'],
+      expectedBoard: example['final_board']
+    }
+  end
+
+  exercise.update! offline_test: {examples: examples}
+end
