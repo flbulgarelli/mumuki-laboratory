@@ -1,6 +1,8 @@
 require 'mumuki/domain/seed'
 
-Mumuki::Domain::Seed.import_languages!
+puts 'Importing Languages...'
+Mumuki::Domain::Seed.languages_syncer.locate_and_import! :language, 'http://localhost:9292'
+Mumuki::Domain::Seed.languages_syncer.locate_and_import! :language, 'https://text.runners.mumuki.io'
 
 bridge = Mumukit::Bridge::Bibliotheca.new("http://bibliotheca-api.mumuki.io")
 
