@@ -51,9 +51,14 @@ Exercise.where(language: Language.for_name('gobstones')).each do |exercise|
   examples = test['examples'].map do |example|
     {
       initialBoard: example['initial_board'],
-      expectedBoard: example['final_board']
-    }
+      expectedBoard: example['final_board'],
+      expectedError: example['error'],
+      title: example['title']
+    }.compact
   end
 
-  exercise.update! offline_test: {examples: examples}
+  exercise.update! offline_test: {
+                    examples: examples,
+                    options: { checkHeadPosition: test['check_head_position'].present? }
+                  }
 end
